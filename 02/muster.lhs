@@ -114,6 +114,10 @@ filter'' f xs
   = let g x | f x = Just x
             | otherwise = Nothing
     in catMaybes $ map g xs
+
+filter'''' f xs = catMaybes $ map g xs
+    where g x | f x = Just x
+              | otherwise = Nothing
 \end{code}
 
 ... und nochmal anders! List comprehensions!
