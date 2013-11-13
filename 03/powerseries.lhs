@@ -2,7 +2,7 @@ Living up McIlroy's music of the streams.
 
 \begin{code}
 {-# OPTIONS_GHC -XTypeSynonymInstances -XFlexibleInstances -XOverlappingInstances #-}
-module Test where
+module PowerSeries where
 
 import Test.QuickCheck
 import Data.Ratio

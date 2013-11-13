@@ -2,7 +2,7 @@ module Muster3 where
 
 -- gegeben in Aufgabenstellung
 import PowerSeries
-import Generator
+import Gen
 
 -- imports
 import Data.List
@@ -44,10 +44,30 @@ check_power2 _ _ = True
 -- ----------------------------------------------
 
 -- Generalisierung
-sterling n k z = undefined -- *faulenz*
-sterling1 n k = sterling n k n
-sterling2 n k = sterling n k k
+sterling n k _ | k == n = 1
+               | k == 0 && n > 0 = 0
+               | n < k = 0
+               | k < 0 = 0
+sterling n k t = (sterling (n-1) (k-1) t) + z * sterling (n-1) k t
+    where z | t == 1 = n-1
+            | t == 2 = k
+            | otherwise = error "meep!"
+sterling1 n k = sterling n k 1
+sterling2 n k = sterling n k 2
 
+sterling1' n k | k == n = 1
+               | k == 0 && n > 0 = 0
+               | n < k = 0
+               | k < 0 = 0
+sterling1' n k = (sterling1' (n-1) (k-1) ) + (n-1) * sterling1' (n-1) k
+sterling2' n k | k == n = 1
+               | k == 0 && n > 0 = 0
+               | n < k = 0
+               | k < 0 = 0
+sterling2' n k = (sterling2' (n-1) (k-1) ) + k * sterling2' (n-1) k
+
+prop_sterling1 n k = (sterling1 n k) == (sterling1' n k)
+prop_sterling2 n k = (sterling2 n k) == (sterling2' n k)
 
 -- ----------------------------------------------
 -- Aufgabe 4
@@ -89,7 +109,7 @@ maxRank xs = snd $ foldl1 f xs
                           | otherwise = (c, d)
 
 maxRank'' = snd . foldl1 f
-    where f x@(a, b) y@(c, d) | a > c = x
+    where f x@(a, _) y@(c, _) | a > c = x
                               | otherwise = y
 
 testRank :: ([Data] -> String) -> String

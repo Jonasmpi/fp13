@@ -1,4 +1,4 @@
-module Main where
+module Gen where
 
 import Test.QuickCheck
 import Test.QuickCheck.Gen
