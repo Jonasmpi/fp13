@@ -6,6 +6,26 @@ import qualified Data.List as List
 import qualified Data.Set as Set
 import Data.Set (Set)
 
+-- Aufgabe 1, Idee.
+#if 0
+class Container c where
+    null :: c a -> Bool
+    at :: c a -> Int -> a
+    ...
+    -- achten Sie auf den Kind von Container!
+    -- 
+
+instance Container [] where
+    null = L.null
+    at = (L.!!)
+    ...
+
+instance Container Set where
+    null = S.null
+    at = undefined
+    ...
+#endif
+
 -- Aufgabe 1, (c) Heiko Bächmann, mit keinen Änderungen
 class Container c where
         insert' :: Ord a => a -> c a -> c a
@@ -39,6 +59,8 @@ instance Container Set where
         fromList' = Set.fromList
         map' = Set.map
         fold' = Set.fold
+
+
 
 
 -- (c) Domenic Dietel, mit Änderungen
@@ -191,7 +213,7 @@ instance Show Cell where
 testBoard :: Board
 testBoard = ((B, B, B), (X, O, B), (B, B, B))
 
--- monaden! Denn: [] ist auch eine Monade...
+-- monaden!
 replaceFirst :: Monad m => (a -> m d) -> (a,b,c) -> m (d,b,c)
 replaceFirst func (a,b,c) = func a >>= \d -> return (d,b,c)
 
@@ -220,7 +242,6 @@ count c str = let helper acc str1 | str1 == c = acc + 1
 
 -- (c) Sandra Greiner, mit keinen Änderungen
 count2::Char -> String -> Int
-count2 x [] = 0
 count2 x ys = length $ filter (x==) ys
 
 testList1, testList2 :: [Int]
