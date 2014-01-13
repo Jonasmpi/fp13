@@ -1,0 +1,20 @@
+Aufgabe 1
+=========
+
+zipWith (+) [1,2,3,4,5] [1..]
+
+Die "leftmost outermost" Auswertung beginnt mit zipWith und nicht mir
+den Parametern, deswegen ist die Verarbeitung der unendlichen Liste
+hier überhaupt möglich.
+
+Rekursives "Durchlaufen" von zipWith wird hier durch die Verschiebung
+der Position gekennzeichnet, Ergebnisse werden sinngemäß vorne dran
+konkateniert.
+
+zipWith (+) [1,2,3,4,5] [1..] ==>
+[1+1] ++ zipWith (+) [2,3,4,5] [2..] ==>
+[1+1,2+2] ++ zipWith (+) [3,4,5] [3..] ==>*
+[1+1,2+2,3+3,4+4,5+5] ++ zipWith (+) [] [6..] ==>
+[1+1,2+2,3+3,4+4,5+5] ++ [] ==>
+[1+1,2+2,3+3,4+4,5+5] ==>*
+[2,4,6,8,10]
