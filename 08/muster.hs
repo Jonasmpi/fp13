@@ -49,7 +49,7 @@ class  (Monad m) => MonadPlus m  where
 instance MonadPlus Maybe where
         mzero = Nothing
         Nothing `mplus` ys = ys
-        xs `mplus`ys = xs
+        xs `mplus` ys = xs
         
 -- the monad laws
 m = Just 3
